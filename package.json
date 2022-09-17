@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.171.0",
+    "aws-sdk": "^2.1218.0",
+    "axios": "^0.27.2",
+    "dotenv": "^16.0.2",
+    "nbb": "^0.7.135",
+    "sqs-consumer": "^5.7.0"
+  }
+}
