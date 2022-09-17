@@ -21,7 +21,8 @@
 (def exec (util/promisify child_process/exec))
 
 (defn generate-image [prompt]
-  (p/let [output (exec (str "./build.sh --skip --prompt \"" prompt "\""))]
+  (p/let [output (exec (str "./build.sh run --skip --prompt \"" prompt "\""))]
+    (js/console.log output)
     output))
 
 (defn upload-image-to-s3 [path]
@@ -38,6 +39,7 @@
               :data #js {:text (str output-url "/" image)}}))
 
 (defn handle-message [msg]
+  (js/console.log msg)
   (let [prompt (.-Body msg)]
     (p/do 
       (generate-image prompt)
