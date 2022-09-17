@@ -13,10 +13,10 @@
 
 (dotenv/config)
 
-(def work-queue js/process.env.WORK_QUEUE)
-(def slack-webhook js/process.env.SLACK_WEBHOOK)
 (def output-bucket js/process.env.OUTPUT_BUCKET)
-(def output-base-url js/process.env.OUTPUT_BASE_URL)
+(def output-url js/process.env.OUTPUT_URL)
+(def slack-webhook js/process.env.SLACK_WEBHOOK)
+(def work-queue-url js/process.env.WORK_QUEUE_URL)
 
 (def exec (util/promisify child_process/exec))
 
@@ -35,7 +35,7 @@
 (defn post-image-to-slack [image]
   (axios #js {:method "POST"
               :url slack-webhook
-              :data #js {:text (str output-base-url "/" image)}}))
+              :data #js {:text (str output-url "/" image)}}))
 
 (defn handle-message [msg]
   (let [prompt (.-Body msg)]
@@ -50,7 +50,7 @@
           (.unlinkSync fs path))))))
 
 (def consumer (.create Consumer
-                       #js {:queueUrl work-queue
+                       #js {:queueUrl work-queue-url
                             :handleMessage handle-message}))
 
 (.start consumer)
